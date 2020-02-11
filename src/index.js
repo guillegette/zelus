@@ -24,6 +24,9 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.container = React.createRef();
+    this.state = {
+      focus: this.props.focus || false
+    };
   }
   componentDidMount() {
     const { props } = this;
@@ -56,7 +59,10 @@ class Editor extends React.Component {
           view.updateState(state);
         }
       });
-      view.focus();
+      if (this.state.focus) {
+        console.log("focus", this.state.focus);
+        view.focus();
+      }
       this.view = view;
     } catch (e) {
       console.log(e.stack);
