@@ -45,8 +45,13 @@ class Editor extends React.Component {
           const { state, transactions } = view.state.applyTransaction(
             transaction
           );
-          if (transactions.some(tr => tr.docChanged)) {
-            props.onChange(state.doc);
+          if (
+            transactions.some(tr => tr.docChanged) &&
+            props.onChange &&
+            typeof props.onChange === "function"
+          ) {
+            const markdown = MarkdownSerializer.serialize(state.doc);
+            props.onChange(markdown);
           }
           view.updateState(state);
         }
@@ -58,7 +63,7 @@ class Editor extends React.Component {
     }
   }
   render() {
-    return <div className="wkt-editor" ref={el => (this.container = el)} />;
+    return <div className="zelus-editor" ref={el => (this.container = el)} />;
   }
 }
 const initialValue = `# Markdown editor
@@ -100,10 +105,9 @@ class App extends React.Component {
       content: initialValue
     };
   }
-  onChange = doc => {
-    const markdown = MarkdownSerializer.serialize(doc);
+  onChange = content => {
     this.setState({
-      content: markdown
+      content
     });
   };
   render() {
