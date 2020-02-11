@@ -1,0 +1,22 @@
+.App {
+  font-family: sans-serif;
+  display: flex;
+}
+.wkt-editor code {
+  background: #ccc;
+}
+.wkt-editor pre > code {
+  display: block;
+  padding: 5px;
+}
+.wkt-editor {
+  border: solid 1px;
+}
+.edit,
+.markdown {
+  flex: 50%;
+}
+.markdown textarea {
+  width: 100%;
+  height: 100%;
+}
